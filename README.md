@@ -234,6 +234,8 @@ curl -X POST http://localhost:8000/api/agent/chat \
 
 If no Gemini API key is configured, the API returns an explicit message instead of crashing, allowing the rest of the platform to be developed independently.
 
+---
+
 ## 📊 API Endpoints
 
 | Method | Endpoint | Purpose |
@@ -247,6 +249,8 @@ If no Gemini API key is configured, the API returns an explicit message instead 
 | POST | `/api/reports/generate` | Generate a daily or weekly report |
 | GET | `/api/reports/{id}/download` | Download a PDF report |
 | GET | `/health` | Health check |
+
+---
 
 ## 🧩 Normalized Log Model
 
