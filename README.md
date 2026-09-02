@@ -437,15 +437,17 @@ Potential next steps include:
 
 ---
 
-## ⚠️ Disclaimer
+## 🚩 Project
 
-ARGUS is an educational and laboratory security project. It should not be considered production-ready security software without additional hardening, authentication, monitoring, testing, and security review.
+**ARGUS SOC** — Network Security Monitoring & SOC Lab Platform
+
+Built as a cybersecurity/networking project using Docker, FastAPI, PostgreSQL, React, GNS3, and AI-assisted security analysis.
 
 ---
 
-## 📄 License
+## ⚠️ Disclaimer
 
-Distributed under the MIT license — feel free to adjust it to your needs.
+ARGUS is an educational and laboratory security project. It should not be considered production-ready security software without additional hardening, authentication, monitoring, testing, and security review.
 
 ---
 
@@ -459,8 +461,6 @@ Feel free to open an _issue_ or a _pull request_ if you have suggestions to impr
 
 ---
 
-## 🚩 Project
+## 📄 License
 
-**ARGUS SOC** — Network Security Monitoring & SOC Lab Platform
-
-Built as a cybersecurity/networking project using Docker, FastAPI, PostgreSQL, React, GNS3, and AI-assisted security analysis.
+Distributed under the MIT license — feel free to adjust it to your needs.
