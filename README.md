@@ -32,58 +32,18 @@ The project is designed to run in a Docker-based environment and can be deployed
 
 ## 🏗️ Architecture
 
-```text
-                         ┌──────────────────────┐
-                         │      FortiGate       │
-                         │      Firewall        │
-                         └──────────┬───────────┘
-                                    │
-                         ┌──────────▼───────────┐
-                         │    ESET PROTECT      │
-                         │     CEF / Syslog     │
-                         └──────────┬───────────┘
-                                    │
-          ┌─────────────────────────┼─────────────────────────┐
-          │                         │                         │
-┌─────────▼─────────┐     ┌────────▼────────┐      ┌────────▼────────┐
-│ Ubuntu EDR nodes  │     │ Backup/NAS sim.  │      │ Network devices │
-│ SSH / sudo logs   │     │ Syslog events    │      │ Syslog events   │
-└─────────┬─────────┘     └────────┬────────┘      └────────┬────────┘
-          │                        │                         │
-          └────────────────────────┼─────────────────────────┘
-                                   │
-                         Syslog UDP/TCP :5514
-                                   │
-                    ┌──────────────▼──────────────┐
-                    │        ARGUS Backend        │
-                    │                            │
-                    │  Syslog Collector           │
-                    │        ↓                   │
-                    │  Vendor Parsers             │
-                    │        ↓                   │
-                    │  NormalizedLog              │
-                    │        ↓                   │
-                    │  PostgreSQL                  │
-                    │                            │
-                    │  REST API                   │
-                    │  AI Agent                    │
-                    │  Report Generator            │
-                    └──────────────┬──────────────┘
-                                   │
-                    ┌──────────────▼──────────────┐
-                    │       ARGUS Frontend        │
-                    │       Web Dashboard         │
-                    └─────────────────────────────┘
-```
+![Architecture](Architecture.png)
 
 ## 📁 Repository Structure
 
 ```text
 ARGUS-SOC/
 │
+├── Architecture.png
 ├── Caddyfile
 ├── DEPLOYMENT.md
 ├── docker-compose.prod.yml
+├── README.md
 │
 ├── backend/
 │   ├── .env
@@ -98,21 +58,25 @@ ARGUS-SOC/
 │   │   ├── main.py
 │   │   ├── models.py
 │   │   ├── schemas.py
+│   │   ├── __init__.py
 │   │   │
 │   │   ├── agent/
 │   │   │   ├── service.py
-│   │   │   └── tools.py
+│   │   │   ├── tools.py
+│   │   │   └── __init__.py
 │   │   │
 │   │   ├── api/
 │   │   │   ├── routes_agent.py
 │   │   │   ├── routes_devices.py
 │   │   │   ├── routes_logs.py
 │   │   │   ├── routes_reports.py
-│   │   │   └── routes_stats.py
+│   │   │   ├── routes_stats.py
+│   │   │   └── __init__.py
 │   │   │
 │   │   ├── collector/
 │   │   │   ├── pipeline.py
 │   │   │   ├── syslog_server.py
+│   │   │   ├── __init__.py
 │   │   │   └── parsers/
 │   │   │       ├── base.py
 │   │   │       ├── eset.py
@@ -121,15 +85,18 @@ ARGUS-SOC/
 │   │   │       ├── network.py
 │   │   │       ├── synology.py
 │   │   │       ├── unknown.py
-│   │   │       └── windows.py
+│   │   │       ├── windows.py
+│   │   │       └── __init__.py
 │   │   │
 │   │   ├── reports/
 │   │   │   ├── generator.py
 │   │   │   ├── scheduler.py
-│   │   │   └── service.py
+│   │   │   ├── service.py
+│   │   │   └── __init__.py
 │   │   │
 │   │   └── storage/
-│   │       └── repository.py
+│   │       ├── repository.py
+│   │       └── __init__.py
 │   │
 │   ├── data/
 │   │   └── reports/
@@ -138,21 +105,27 @@ ARGUS-SOC/
 │       ├── send_test_logs.py
 │       └── test-logs.py
 │
-└── frontend/
-    ├── Dockerfile
-    ├── index.html
-    ├── nginx.conf
-    ├── package.json
-    ├── package-lock.json
-    ├── postcss.config.js
-    ├── tailwind.config.js
-    ├── vite.config.js
-    │
-    └── src/
-        ├── App.jsx
-        ├── index.css
-        └── main.jsx
-```
+├── frontend/
+│   ├── .dockerignore
+│   ├── Dockerfile
+│   ├── index.html
+│   ├── nginx.conf
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── postcss.config.js
+│   ├── tailwind.config.js
+│   ├── vite.config.js
+│   │
+│   └── src/
+│       ├── App.jsx
+│       ├── index.css
+│       └── main.jsx
+│
+└── Screenshots/
+    ├── Capture d’écran (225).png
+    ├── Capture d’écran (226).png
+    ├── Capture d’écran (227).png
+    └── Capture d’écran (228).png
 
 ## 🛠️ Technology Stack
 
