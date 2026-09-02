@@ -1,0 +1,62 @@
+services:
+  db:
+    image: timescale/timescaledb:latest-pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: argus
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-argus}
+      POSTGRES_DB: argus
+    volumes:
+      - argus_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U argus -d argus"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    # Pas de port exposé côté hôte en production — seul le backend y accède,
+    # via le réseau Docker interne.
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    env_file: ./backend/.env
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - argus_reports:/app/data/reports
+    ports:
+      # Syslog doit rester accessible directement depuis le réseau du lab
+      # (FortiGate, ESET PROTECT, EDR, Backup-Server) — pas de raison de le
+      # cacher derrière Caddy, qui ne fait que du HTTP.
+      - "5514:5514/udp"
+      - "5514:5514/tcp"
+      # Le port 8000 (API) n'est volontairement PAS publié ici : seul Caddy
+      # (via le réseau Docker interne) et le syslog collector y accèdent.
+      # Décommenter la ligne suivante uniquement pour du débogage direct :
+      # - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    # Pas de port publié : uniquement accessible via Caddy.
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  argus_db_data:
+  argus_reports:
+  caddy_data:
+  caddy_config:

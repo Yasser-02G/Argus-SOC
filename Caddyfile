@@ -1,0 +1,29 @@
+# Déploiement interne (192.168.1.20, pas de nom de domaine public) : on sert
+# en HTTP simple sur :80. Caddy ne peut pas obtenir de certificat TLS
+# automatique sans domaine public joignable par Let's Encrypt.
+#
+# Si un jour ARGUS est exposé via un vrai domaine (ex: argus.tondomaine.com),
+# remplacer ":80" ci-dessous par le nom de domaine — Caddy activera HTTPS
+# automatiquement, sans aucune autre modification.
+:80 {
+	# API + endpoints techniques -> backend FastAPI
+	handle /api/* {
+		reverse_proxy backend:8000
+	}
+	handle /health {
+		reverse_proxy backend:8000
+	}
+	handle /docs* {
+		reverse_proxy backend:8000
+	}
+	handle /openapi.json {
+		reverse_proxy backend:8000
+	}
+
+	# Tout le reste -> frontend statique (React buildé)
+	handle {
+		reverse_proxy frontend:80
+	}
+
+	encode gzip
+}

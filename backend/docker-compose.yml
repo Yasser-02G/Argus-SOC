@@ -1,0 +1,35 @@
+services:
+  db:
+    image: timescale/timescaledb:latest-pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: argus
+      POSTGRES_PASSWORD: argus
+      POSTGRES_DB: argus
+    ports:
+      - "5432:5432"
+    volumes:
+      - argus_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U argus -d argus"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  backend:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - argus_reports:/app/data/reports
+    ports:
+      - "8000:8000"     # API + docs (/docs)
+      - "5514:5514/udp" # syslog UDP — point vos équipements ici
+      - "5514:5514/tcp" # syslog TCP
+
+volumes:
+  argus_db_data:
+  argus_reports:

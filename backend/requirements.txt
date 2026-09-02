@@ -1,0 +1,11 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+sqlalchemy[asyncio]==2.0.35
+asyncpg==0.29.0
+pydantic==2.13.4
+pydantic-settings==2.14.2
+python-dotenv==1.0.1
+alembic==1.13.2
+google-genai==2.17.0
+reportlab==4.4.10
+apscheduler==3.11.3
