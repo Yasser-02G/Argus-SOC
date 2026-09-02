@@ -435,11 +435,31 @@ Potential next steps include:
 - [ ] Stronger secrets management
 - [ ] Automated testing and CI/CD
 
+---
+
 ## ⚠️ Disclaimer
 
 ARGUS is an educational and laboratory security project. It should not be considered production-ready security software without additional hardening, authentication, monitoring, testing, and security review.
 
-## 👤 Project
+---
+
+## 📄 License
+
+Distributed under the MIT license — feel free to adjust it to your needs.
+
+---
+
+## 👤 Author
+
+**Yasser** — Network & Security Engineer  
+
+🔗 GitHub: [@Yasser-02G](https://github.com/Yasser-02G)
+
+Feel free to open an _issue_ or a _pull request_ if you have suggestions to improve this project.
+
+---
+
+## 🚩 Project
 
 **ARGUS SOC** — Network Security Monitoring & SOC Lab Platform
 
