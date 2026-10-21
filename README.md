@@ -7,7 +7,7 @@ The project is designed to run in a Docker-based environment and can be deployed
 > **Project status:** MVP / lab project. Authentication, database migrations, and production hardening still need to be added before exposing the platform to an untrusted network.
 
 ## ✨ Features
- 
+
 - **Centralized syslog collection**
   - UDP and TCP syslog ingestion on port `5514`
   - Designed for FortiGate, ESET PROTECT, Synology/NAS-style logs, Linux/Windows systems, and network equipment
