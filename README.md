@@ -127,6 +127,7 @@ ARGUS-SOC/
     ├── Capture d’écran (227).png
     └── Capture d’écran (228).png
 
+```
 ## 🛠️ Technology Stack
 
 | Layer | Technology |
